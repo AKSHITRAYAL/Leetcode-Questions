@@ -1,25 +1,21 @@
-import java.util.*;
-
 class Solution {
     public String mapWordWeights(String[] words, int[] weights) {
-        TreeMap<String, Integer> map = new TreeMap<>();
+        StringBuilder ans = new StringBuilder();
 
-        for (int i = 0; i < words.length; i++) {
-            map.putIfAbsent(words[i], weights[i]);
-        }
+        for (String word : words) {
+            int sum = 0;
 
-        StringBuilder sb = new StringBuilder();
-
-        for (Map.Entry<String, Integer> entry : map.entrySet()) {
-            if (sb.length() > 0) {
-                sb.append(",");
+            for (char ch : word.toCharArray()) {
+                sum += weights[ch - 'a'];
             }
-            sb.append(entry.getKey())
-              .append(":")
-              .append(entry.getValue());
+
+            int rem = sum % 26;
+
+            // 0 -> 'z', 1 -> 'y', ..., 25 -> 'a'
+            ans.append((char)('z' - rem));
         }
 
-        return sb.toString();
+        return ans.toString();
     }
 }
 
